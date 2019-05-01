@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/syyyym/ChatMessagesWebApp/issues"
   },
-  "homepage": "https://github.com/syyyym/ChatMessagesWebApp#readme"
+  "homepage": "https://github.com/syyyym/ChatMessagesWebApp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
