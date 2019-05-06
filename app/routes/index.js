@@ -1,7 +1,8 @@
 'use strict';
-const router = require('express').Router();
+const helper = require('../helpers');
+
 module.exports = () => {
-    let routes = {
+    let routesObj = {
         'get': {
             '/': (req, res, next) => {
                 res.render('login');
@@ -16,19 +17,5 @@ module.exports = () => {
         'post': {
         }
     }
-    let registerRoutes = (routes, method) => {
-        for (let key in routes) {
-            if (typeof routes[key] === 'object' && routes[key] != null && !(routes[key] instanceof Array)) {
-                registerRoutes(routes[key], key);
-            } else {
-                if (method === 'get') {
-                    router.get(key, routes[key]);
-                } else if (method === 'post') {
-                    router.post(key, routes[key]);
-                }
-            }
-        }
-    }
-    registerRoutes(routes);
-    return router;
+    return helper.route(routesObj);
 }
