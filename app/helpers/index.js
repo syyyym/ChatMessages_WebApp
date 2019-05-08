@@ -2,17 +2,17 @@
 const router = require('express').Router();
 
 //Iterates through thr routes object and mounts the routes
-let _registerRoutes = (routes, method) => {
-    for (let key in routes) {
-        if (typeof routes[key] === 'object' && routes[key] != null && !(routes[key] instanceof Array)) {
-            _registerRoutes(routes[key], key);
+let _registerRoutes = (routesObj, method) => {
+    for (let key in routesObj) {
+        if (typeof routesObj[key] === 'object' && routesObj[key] != null && !(routesObj[key] instanceof Array)) {
+            _registerRoutes(routesObj[key], key);
         } else {
             if (method === 'get') {
-                router.get(key, routes[key]);
+                router.get(key, routesObj[key]);
             } else if (method === 'post') {
-                router.post(key, routes[key]);
+                router.post(key, routesObj[key]);
             } else {
-                router.use(routes[key]);
+                router.use(routesObj[key]);
             }
         }
     }
