@@ -9,6 +9,16 @@ db.once('open', function () {
   console.log('Database connection successful')
 });
 
+// Create a Schema for user authenticating with fb or twitter
+const chatUser = new mongoose.Schema({ 
+	profileId: String, 
+	fullName: String,
+	profilePic: String
+});
+// Turn schema into model - 'chatusers' collection in db
+let userModel = mongoose.model('chatUser', chatUser); 
+
 module.exports = {
-  mongoose
+  mongoose,
+  userModel
 }
