@@ -10,13 +10,13 @@ db.once('open', function () {
 });
 
 // Create a Schema for user authenticating with fb or twitter
-const chatUser = new mongoose.Schema({ 
+const chatUserSchema = new mongoose.Schema({ 
 	profileId: String, 
 	fullName: String,
 	profilePic: String
 });
 // Turn schema into model - 'chatusers' collection in db
-let userModel = mongoose.model('chatUser', chatUser); 
+let userModel = mongoose.model('chatUser', chatUserSchema); 
 
 module.exports = {
   mongoose,
