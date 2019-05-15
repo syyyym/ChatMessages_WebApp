@@ -45,6 +45,21 @@ let createNewUser = profile => {
     });
 }
 
+// Find and fetch the user(document) from the collection based on the unique id 
+let findById = id => {
+	return new Promise((resolve, reject) => {
+		db.userModel.findById(id, (error, user) => { 
+			if(error) {
+                console.log('Fetch user error');
+				reject(error);
+			} else {
+                console.log('User fetched by id');
+				resolve(user);
+			}
+		});
+	});
+}
+
 let routeFunc = routesObj => {
     _registerRoutes(routesObj);
     return router;
@@ -53,5 +68,6 @@ let routeFunc = routesObj => {
 module.exports = {
     route: routeFunc,
     findOne,
-    createNewUser
+    createNewUser,
+    findById
 }
