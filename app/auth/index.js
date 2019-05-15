@@ -5,6 +5,14 @@ const helper = require('../helpers');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = () => {
+	passport.serializeUser((user, done) => { 
+		done(null, user.id); 
+	});		
+	passport.deserializeUser((id, done) => { 
+		helper.findById(id) 
+			.then(user => done(null, user)) 
+			.catch(error => console.log( 'Error when deserializing the user: ' + error));
+	});	
 	let authProcessor = (accessToken, refreshToken, profile, done) => {
 		helper.findOne(profile.id)
 			.then(result => {
