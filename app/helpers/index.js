@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const db = require('../db'); 
 
 //Iterates through thr routes object and mounts the routes
 let _registerRoutes = (routesObj, method) => {
@@ -17,10 +18,40 @@ let _registerRoutes = (routesObj, method) => {
         }
     }
 }
+
+// Find a single user(document) in database based on profileId
+let findOne = profileID => {
+	return db.userModel.findOne({ 
+		'profileId': profileID 
+	}); //returns a promise
+}
+
+// Create a new user in database and return that instance
+let createNewUser = profile => {
+    return new Promise((resolve, reject) => {
+        let newchatUser = new db.userModel({
+            profileId: profile.id, 
+			fullName: profile.displayName,
+			profilePic: profile.photos[0].value || '' 
+        });
+        newchatUser.save( error => {
+            if(error){
+                reject(error);
+            } else {
+                console.log('New user create in db');
+                resolve(newchatUser);
+            }
+        })
+    });
+}
+
 let routeFunc = routesObj => {
     _registerRoutes(routesObj);
     return router;
 }
+
 module.exports = {
-    route: routeFunc
+    route: routeFunc,
+    findOne,
+    createNewUser
 }
