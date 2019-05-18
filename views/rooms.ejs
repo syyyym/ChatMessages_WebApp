@@ -9,11 +9,11 @@
 <body>
 	<div class="container">
 		<div class="titlePanel">
-			<h1>ChatApp | Select or Create a Chatroom</h1>
+			<h1>Chat App | Select or Create a Chatroom</h1>
 		</div>
 		<div class="controls">
-			<div class="userPicHolder"><img src="/img/user.jpg" alt="John Doe"></div>
-			<p class="userName">John Doe</p>
+			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
+			<p class="userName"><%= user.fullName %></p>
 			<a href="login.htm" id="logOutBtn">Logout</a>
 		</div>
 		<div class="controls">
