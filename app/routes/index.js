@@ -8,14 +8,21 @@ module.exports = () => {
             '/': (req, res, next) => {
                 res.render('login');
             },
-            '/rooms': (req, res, next) => {
-                res.render('rooms', {
-                    user: req.user
-                });
-            },
-            '/chat': (req, res, next) => {
-                res.render('chatroom');
-            },
+            '/rooms': [
+                helper.isAuthenticated,
+                (req, res, next) => {
+                    //console.log('User', req.user);
+                    res.render('rooms', {
+                        user: req.user
+                    });
+                }],
+            '/chat': [
+                helper.isAuthenticated,
+                (req, res, next) => {
+                    res.render('chatroom', {
+                        user: req.user
+                    });
+                }],
             // '/getsession': (req, res, next) => {
             //     res.send("Session color: " + req.session.sessionColor);
             // },
@@ -37,7 +44,7 @@ module.exports = () => {
         },
         'NA': (req, res, next) => {
             res.status(404).sendFile(process.cwd() + '/views/404.htm');
-        }          
+        }
     }
     return helper.route(routesObj);
 }
