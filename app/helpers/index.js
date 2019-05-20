@@ -60,6 +60,15 @@ let findById = id => {
 	});
 }
 
+//Check if the user is logged in, redirect to login if not
+let isAuthenticated = (req, res, next) => {
+	if(req.isAuthenticated()) {
+		next(); 
+	} else {
+		res.redirect('/'); 
+	}
+}
+
 let routeFunc = routesObj => {
     _registerRoutes(routesObj);
     return router;
@@ -69,5 +78,6 @@ module.exports = {
     route: routeFunc,
     findOne,
     createNewUser,
-    findById
+    findById,
+    isAuthenticated
 }
