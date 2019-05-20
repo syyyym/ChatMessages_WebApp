@@ -27,7 +27,11 @@ module.exports = () => {
             '/auth/facebook/callback': passport.authenticate('facebook', {
                 successRedirect: '/rooms',
                 failureRedirect: '/'
-            })
+            }),
+            '/logout': (req, res, next) => {
+                req.logout();
+                res.redirect('/');
+            }
         },
         'post': {
         },
