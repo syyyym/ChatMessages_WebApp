@@ -1,4 +1,5 @@
 'use strict';
-module.exports = (io) => {
+module.exports = (io, app) => {
+    const allRooms = app.locals.chatrooms;
 
 }

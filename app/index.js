@@ -2,9 +2,10 @@
 require('./auth')();
 
 let ioServer = app => {
+    app.locals.chatrooms = [];
     const server = require('http').Server(app);
     const io = require('socket.io')(server);
-    require('./socket')(io);
+    require('./socket')(io, app);
     return server;
 }
 
