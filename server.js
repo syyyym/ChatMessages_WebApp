@@ -12,6 +12,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', chatApp.router);
 
-app.listen(app.get('port'), () => {
+chatApp.ioServer(app).listen(app.get('port'), () => {
     console.log("Chat Application running on port 3000")
 });
