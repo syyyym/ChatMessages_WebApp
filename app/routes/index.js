@@ -1,6 +1,7 @@
 'use strict';
 const helper = require('../helpers');
 const passport = require('passport');
+const config = require('../config');
 
 module.exports = () => {
     let routesObj = {
@@ -13,14 +14,16 @@ module.exports = () => {
                 (req, res, next) => {
                     //console.log('User', req.user);
                     res.render('rooms', {
-                        user: req.user
+                        user: req.user,
+                        host: config.host
                     });
                 }],
             '/chat': [
                 helper.isAuthenticated,
                 (req, res, next) => {
                     res.render('chatroom', {
-                        user: req.user
+                        user: req.user,
+                        host: config.host
                     });
                 }],
             // '/getsession': (req, res, next) => {
