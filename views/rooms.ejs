@@ -8,8 +8,20 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$( () => {
-			let socket = io( '<%= host %>' + '/roomslist');
+			let socket = io('<%= host %>' + '/roomslist');
 			socket.on('connect', () => console.log('Client connected to server'));
+			let renderChatRooms = chatrooms => {
+				let roomsListDiv = $('#roomsListUL');
+				let listStr = '';
+				for (let chat of chatrooms) {
+					listStr += `<a href="/chat/${chat.roomID}"><li>${chat.room}</li></a>`;
+				}
+				roomsListDiv.html('').append(listStr);
+			}
+			socket.emit('getChatrooms');
+			socket.on('chatRoomsList', chatrooms => {
+				renderChatRooms(JSON.parse(chatrooms));
+			})
 		})
 	</script>
 </head>
