@@ -18,13 +18,18 @@ module.exports = () => {
                         host: config.host
                     });
                 }],
-            '/chat': [
-                helper.isAuthenticated,
-                (req, res, next) => {
-                    res.render('chatroom', {
-                        user: req.user,
-                        host: config.host
-                    });
+                '/chat/:id': [helper.isAuthenticated, (req, res, next) => {
+                    let getRoom = helper.findRoomById(req.app.locals.chatrooms, req.params.id);
+                    if (getRoom === undefined) {
+                        return next();
+                    } else {
+                        res.render('chatroom', {
+                            user: req.user,
+                            host: config.host,
+                            room: getRoom.room,
+                            roomID: getRoom.roomID
+                        });
+                    }
                 }],
             // '/getsession': (req, res, next) => {
             //     res.send("Session color: " + req.session.sessionColor);
