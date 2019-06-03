@@ -2,18 +2,25 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Chat App - Topic Goes Here</title>
+	<title>Chat App - <%= room %></title>
 	<link rel="stylesheet" href="/css/chatroomStyles.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 	'use strict';
 		$(() => {
-			let socket = io('<%= host %>' + '/chatter');
+			let socket = io('<%= host %>' + '/chatter'); 
 			let roomID = '<%= roomID %>';
-			let user = '<%= user.fullName %>';
+			let userName = '<%= user.fullName %>';
 			let userPic = '<%= user.profilePic %>';
 
+			socket.on('connect', () => {
+				socket.emit('joinchat', { 
+					roomID, 
+					userName,
+					userPic
+				});
+			});	
 		})
 	</script>
 </head>
