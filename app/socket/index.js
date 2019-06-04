@@ -36,9 +36,9 @@ module.exports = (io, app) => {
     io.of('/chatter').on('connection', socket => {
         // Join a chatroom - receive (listen to) the join event 
 		socket.on('joinchat', data => { 
-            //console.log("data: ", data);
             let roomUsersList = helper.addUserToRoom(allrooms, data, socket); 
-            console.log('roomUsersList: ', roomUsersList); 
+            socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(roomUsersList.users)); 
+            socket.emit('updateUsersList', JSON.stringify(roomUsersList.users)); 
         });        
     });
 }
