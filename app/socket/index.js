@@ -39,6 +39,11 @@ module.exports = (io, app) => {
             let roomUsersList = helper.addUserToRoom(allrooms, data, socket); 
             socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(roomUsersList.users)); 
             socket.emit('updateUsersList', JSON.stringify(roomUsersList.users)); 
-        });        
+        });
+        
+        socket.on('disconnect', () => {
+			let room = helper.removeUserFromRoom(allrooms, socket); 
+			socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(room.users)); 
+        });
     });
 }
