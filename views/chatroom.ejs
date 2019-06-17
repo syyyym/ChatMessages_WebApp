@@ -63,6 +63,20 @@
 					messageFld.val('');
 				}
 			});
+			$('#sendBtn').on('click', () => {
+				let messageFld = chatInput;
+				if (messageFld.val() !== '') {
+					socket.emit('newMessage', {
+						roomID,
+						user: userName,
+						userPic,
+						message: messageFld.val()
+					});
+					// Update the local feed 
+					updateFeed(userPic, messageFld.val());
+					messageFld.val('');
+				}
+			});
 			socket.on('inMessage', data => {
 				let parsedData = JSON.parse(data); 
 				updateFeed(parsedData.userPic, parsedData.message);
@@ -93,7 +107,8 @@
 				</div>
 				<div class="typePanel">
 					<input type="text" name="userInput" placeholder="Type here and press enter">
-					<a href="#" id="uploadFile" class="fileUploadBtn">Photo</a>
+					<!--a href="#" id="uploadFile" class="fileUploadBtn">Photo</a-->
+					<a href="#" id="sendBtn" class="fileUploadBtn">Send</a>
 				</div>
 			</div>
 			<div class="chatUsers">
