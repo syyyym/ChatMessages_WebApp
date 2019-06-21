@@ -10,6 +10,13 @@ app.use(express.static('public'));
 app.use(chatApp.session);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(require('morgan')('combined', {
+	stream: {
+		write: message => {
+			chatApp.logger.log('info', message);
+		}
+	}
+}));
 app.use('/', chatApp.router);
 
 chatApp.ioServer(app).listen(app.get('port'), () => {
